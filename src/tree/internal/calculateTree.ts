@@ -7,7 +7,7 @@ export function calculateTree<T extends TreeData>(width: number, height: number,
   // options
   const { size = 25, customizeItems } = options
   // Calculate tree
-  const nodeHierachy = tree<T>().size([width, height])(hierarchy(data))
+  const nodeHierachy = tree<T>().size([width, height - size])(hierarchy(data))
 
   const nodes = nodeHierachy.descendants().filter(n => Number(n.data.items[0]) !== 0)
   const itemsArr = nodes.map(n => getNodeItemsPosition(n, size))
