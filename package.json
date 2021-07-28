@@ -1,0 +1,22 @@
+{
+  "name": "d3-visualgo",
+  "version": "0.0.1",
+  "description": "Algorithms & DS visualization using d3.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "author": "Dang Thanh Tung",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs"
+  },
+  "peerDependencies": {
+    "d3": "^7.0.0",
+    "@types/d3": "^7.0.0"
+  }
+}
