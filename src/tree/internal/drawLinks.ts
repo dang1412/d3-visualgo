@@ -4,7 +4,7 @@ import { LinkPosition, TreeData, TreeOptions } from '../types'
 export function drawLinks<T extends TreeData>(
   container: Container,
   links: LinkPosition<T>[],
-  { transitDuration = 1000, linkId }: TreeOptions<T>
+  { transitDuration = 1000, linkId, offsetX = 0, offsetY = 0 }: TreeOptions<T>
 ): void {
   const linksSelectAll = container.selectAll<SVGPathElement, LinkPosition<T>>('path.link')
     .data(links, (d: LinkPosition<T>, index) => linkId ? linkId(d) : `${index}`)
@@ -18,12 +18,12 @@ export function drawLinks<T extends TreeData>(
     .attr('class', 'link transit')
     .attr('fill', 'none')
     .attr('stroke', '#ccc')
-    .attr('d', (l) => diagnol(l.start, l.start))
+    .attr('d', (l) => diagnol(movePoint(l.start, offsetX, offsetY), movePoint(l.start, offsetX, offsetY)))
 
   linksEnter.merge(linksSelectAll)
     .transition()
     .duration(transitDuration)
-    .attr('d', (l) => diagnol(l.start, l.end))
+    .attr('d', (l) => diagnol(movePoint(l.start, offsetX, offsetY), movePoint(l.end, offsetX, offsetY)))
 }
 
 // link is determined by the target node id
@@ -36,6 +36,13 @@ function diagnol(parent: Point, child: Point): string {
     + 'C' + child.x + ',' + (child.y + parent.y) / 2
     + ' ' + parent.x + ',' + (child.y + parent.y) / 2
     + ' ' + parent.x + ',' + parent.y
+}
+
+function movePoint(p: Point, offsetX: number, offsetY: number): Point {
+  return {
+    x: p.x + offsetX,
+    y: p.y + offsetY
+  }
 }
 
 // function findTargetIndex(source: HierarchyPointNode<any>, target: HierarchyPointNode<any>): number {

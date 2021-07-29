@@ -1,12 +1,11 @@
-import { Container } from '../../common'
-import { TreeOptions, ItemPosition, TreeData } from '../types'
+import { VisualOptions, ItemPosition, Container } from './types'
 
-export function drawItems<T extends TreeData>(
+export function drawItems<T>(
   container: Container,
   items: ItemPosition<T>[],
-  opts: TreeOptions<T>
+  opts: VisualOptions<any>
 ): void {
-  const { size = 25, shape = 'circle', transitDuration = 1000, onTransitionEnd = () => {}, customizeDrawItems, itemId } = opts
+  const { size = 25, shape = 'circle', transitDuration = 1000, onTransitionEnd = () => {}, customizeDrawItems, itemId, offsetX = 0, offsetY = 0 } = opts
   const itemsSelect = container.selectAll<SVGGElement, ItemPosition<T>>('g.item-container')
     .data(items, (d) => itemId ? itemId(d) : d.value)
 
@@ -21,7 +20,7 @@ export function drawItems<T extends TreeData>(
   const itemsEnter = itemsSelect.enter()
     .insert('g')
     .attr('class', 'item-container transit')
-    .attr('transform', (d) => `translate(${d.pos.x}, ${d.pos.y - size / 2})`)
+    .attr('transform', (d) => `translate(${d.pos.x + offsetX}, ${d.pos.y - size / 2 + offsetY})`)
 
   // add circle or rect
   const itemsElem = itemsEnter.append(shape).attr('fill', 'white')
@@ -57,7 +56,7 @@ export function drawItems<T extends TreeData>(
     .transition()
     .duration(transitDuration)
     .attr('transform', (d) => {
-      return `translate(${d.pos.x}, ${d.pos.y})`
+      return `translate(${d.pos.x + offsetX}, ${d.pos.y + offsetY})`
     })
     .on('end', () => {
       count--

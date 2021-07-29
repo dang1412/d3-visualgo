@@ -1,7 +1,7 @@
 import { tree, hierarchy, HierarchyPointNode, HierarchyPointLink } from 'd3-hierarchy'
 
-import { Point } from '../../common'
-import { ItemPosition, LinkPosition, TreeData, TreeOptions, TreePosition } from '../types'
+import { ItemPosition, Point } from '../../common'
+import { LinkPosition, TreeData, TreeOptions, TreePosition } from '../types'
 
 export function calculateTree<T extends TreeData>(width: number, height: number, data: T, options: TreeOptions<T>): TreePosition<T> {
   // options

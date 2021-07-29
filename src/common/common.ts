@@ -1,24 +1,29 @@
-import { Selection } from 'd3-selection'
+import { Container, VisualMargin, VisualOptions } from './types'
 
-export interface Point {
-  x: number
-  y: number
-}
+// export interface Point {
+//   x: number
+//   y: number
+// }
 
-export interface VisualOptions {
-  width: number
-  height: number
-  margin?: number | number[]
-  transitDuration?: number
-  onTransitionEnd?: () => void
-}
+// export interface VisualOptions<T> {
+//   width: number
+//   height: number
+//   margin?: number | number[]
+//   transitDuration?: number
+//   size?: number
+//   shape?: 'circle' | 'rect'
+//   customizeItems?: (items: ItemPosition<T>[]) => ItemPosition<T>[]
+//   customizeDrawItems?: (itemsAll: TreeItemsSelection<T>, itemsEnter: TreeItemsSelection<T>) => void
+//   itemId?: (item: ItemPosition<T>) => string
+//   onTransitionEnd?: () => void
+// }
 
-export interface VisualMargin {
-  top: number
-  right: number
-  bottom: number
-  left: number
-}
+// export interface VisualMargin {
+//   top: number
+//   right: number
+//   bottom: number
+//   left: number
+// }
 
 const defaultMargin: VisualMargin = { top: 20, right: 10, bottom: 10, left: 10 }
 
@@ -36,15 +41,13 @@ export function parseMarginOpt(margin?: number | number[]): VisualMargin {
   return { top: marginArray[0], right: marginArray[1], bottom: marginArray[2], left: marginArray[3] }
 }
 
-export type Container = Selection<SVGElement | SVGGElement, unknown, any, undefined>
-
 /**
  * 
  * @param wrapperSelect 
  * @param options 
  * @returns 
  */
-export function getContainer(wrapperSelect: Container, options: VisualOptions, id: number): Container {
+export function getContainer(wrapperSelect: Container, options: VisualOptions<any>, id: number): Container {
   // Calculate margin
   const { margin: marginOpt } = options
   const margin = parseMarginOpt(marginOpt)
@@ -64,12 +67,12 @@ export function getContainer(wrapperSelect: Container, options: VisualOptions, i
  * @param options 
  * @returns 
  */
-export function calculateWidthHeight(options: VisualOptions): [number, number] {
+export function calculateWidthHeight(options: VisualOptions<any>): [number, number] {
   // Calculate margin, width, height
-  const { width: wrapWidth, height: wrapHeight, margin: marginOpt } = options
+  const { width: wrapWidth, height: wrapHeight, margin: marginOpt, offsetX = 0, offsetY = 0 } = options
   const margin = parseMarginOpt(marginOpt)
-  const width = wrapWidth - margin.left - margin.right,
-    height = wrapHeight - margin.top - margin.bottom
+  const width = wrapWidth - margin.left - margin.right - offsetX,
+    height = wrapHeight - margin.top - margin.bottom - offsetY
 
   return [width, height]
 }
