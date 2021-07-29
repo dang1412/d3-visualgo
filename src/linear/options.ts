@@ -1,7 +1,5 @@
 import { VisualOptions } from '../common'
 
-export interface LinearVisualOptions extends VisualOptions {
-  size: number
-  shape: 'rect' | 'circle'
-  spaceBetween: number
+export interface LinearVisualOptions extends VisualOptions<any> {
+  spacing: number
 }
