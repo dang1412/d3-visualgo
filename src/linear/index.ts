@@ -1,2 +1,2 @@
 export * from './draw-linear'
-export * from './options'
+export * from './types'

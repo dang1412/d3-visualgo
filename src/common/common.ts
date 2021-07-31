@@ -25,7 +25,7 @@ import { Container, VisualMargin, VisualOptions } from './types'
 //   left: number
 // }
 
-const defaultMargin: VisualMargin = { top: 20, right: 10, bottom: 10, left: 10 }
+const defaultMargin: VisualMargin = { top: 0, right: 0, bottom: 0, left: 0 }
 
 /**
  * 
