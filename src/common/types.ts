@@ -16,6 +16,7 @@ export type ItemsSelection<T> = Selection<SVGGElement, ItemPosition<T>, SVGGElem
 export interface VisualOptions<T> {
   width: number
   height: number
+  id?: number
   margin?: number | number[]
   offsetX?: number
   offsetY?: number

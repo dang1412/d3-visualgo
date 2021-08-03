@@ -47,9 +47,9 @@ export function parseMarginOpt(margin?: number | number[]): VisualMargin {
  * @param options 
  * @returns 
  */
-export function getContainer(wrapperSelect: Container, options: VisualOptions<any>, id: number): Container {
+export function getContainer(wrapperSelect: Container, options: VisualOptions<any>): Container {
   // Calculate margin
-  const { margin: marginOpt } = options
+  const { margin: marginOpt, id = 1 } = options
   const margin = parseMarginOpt(marginOpt)
 
   const layerAll = wrapperSelect.selectAll<SVGGElement, number>(`g.container${id}`).data([1])

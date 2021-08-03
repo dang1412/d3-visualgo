@@ -8,7 +8,7 @@ import { BarVisualOptions } from './common'
 export function drawBars(wrapper: SVGElement | SVGGElement, data: number[], options: BarVisualOptions) {
   const { transitDuration = 1000 } = options
   const wrapperSelect = select(wrapper)
-  const gSelect = getContainer(wrapperSelect, options, 1)
+  const gSelect = getContainer(wrapperSelect, options)
   const [width, height] = calculateWidthHeight(options)
 
   // const gSelect = select(g)

@@ -8,8 +8,7 @@ import { calculateTree, drawLinks } from './internal'
 export const drawTree = <T extends TreeData>(wrapper: SVGElement | SVGGElement, data: T, options: TreeOptions<T>) => {
   const wrapperSelect = select(wrapper)
 
-  const linksContainer = getContainer(wrapperSelect, options, 1)
-  const itemsContainer = getContainer(wrapperSelect, options, 2)
+  const container = getContainer(wrapperSelect, options)
 
   const [width, height] = calculateWidthHeight(options)
 
@@ -17,8 +16,8 @@ export const drawTree = <T extends TreeData>(wrapper: SVGElement | SVGGElement, 
   const treePosition = calculateTree(width, height, data, options)
 
   // Draw links
-  drawLinks(linksContainer, treePosition.links, options)
+  drawLinks(container, treePosition.links, options)
 
   // Draw items
-  drawItems(itemsContainer, treePosition.items, options)
+  drawItems(container, treePosition.items, options)
 }

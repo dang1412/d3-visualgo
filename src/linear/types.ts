@@ -1,6 +1,6 @@
 import { VisualOptions } from '../common'
 
-export interface LinearVisualOptions extends VisualOptions<any> {
+export interface LinearVisualOptions<T extends LinearItem> extends VisualOptions<T> {
   spacing?: number
 }
 
