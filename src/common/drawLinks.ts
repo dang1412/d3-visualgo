@@ -1,12 +1,14 @@
-import { Container, Point } from '../../common'
-import { LinkPosition, TreeData, TreeOptions } from '../types'
+import { select } from 'd3-selection'
 
-export function drawLinks<T extends TreeData>(
-  container: Container,
+// import { Point } from '../../common'
+import { DrawLinkOptions, LinkPosition, Point } from './types'
+
+export function drawLinks<T = any>(
+  container: SVGGElement,
   links: LinkPosition<T>[],
-  { transitDuration = 1000, linkId, offsetX = 0, offsetY = 0 }: TreeOptions<T>
+  { transitDuration = 1000, linkId }: DrawLinkOptions<T>
 ): void {
-  const linksSelectAll = container.selectAll<SVGPathElement, LinkPosition<T>>('path.link')
+  const linksSelectAll = select(container).selectAll<SVGPathElement, LinkPosition<T>>('path.link')
     .data(links, (d: LinkPosition<T>, index) => linkId ? linkId(d) : `${index}`)
 
   // remove redundant links
@@ -14,16 +16,15 @@ export function drawLinks<T extends TreeData>(
 
   // draw new links first position
   const linksEnter = linksSelectAll.enter().append('path')
-    // .attr('id', getLinkId)
-    .attr('class', 'link transit')
+    .attr('class', 'link')
     .attr('fill', 'none')
     .attr('stroke', '#ccc')
-    .attr('d', (l) => diagnol(movePoint(l.start, offsetX, offsetY), movePoint(l.start, offsetX, offsetY)))
+    .attr('d', (l) => diagnol(l.start, l.start))
 
   linksEnter.merge(linksSelectAll)
     .transition()
     .duration(transitDuration)
-    .attr('d', (l) => diagnol(movePoint(l.start, offsetX, offsetY), movePoint(l.end, offsetX, offsetY)))
+    .attr('d', (l) => diagnol(l.start, l.end))
 }
 
 // link is determined by the target node id
@@ -38,12 +39,12 @@ function diagnol(parent: Point, child: Point): string {
     + ' ' + parent.x + ',' + parent.y
 }
 
-function movePoint(p: Point, offsetX: number, offsetY: number): Point {
-  return {
-    x: p.x + offsetX,
-    y: p.y + offsetY
-  }
-}
+// function movePoint(p: Point, offsetX: number, offsetY: number): Point {
+//   return {
+//     x: p.x + offsetX,
+//     y: p.y + offsetY
+//   }
+// }
 
 // function findTargetIndex(source: HierarchyPointNode<any>, target: HierarchyPointNode<any>): number {
 //   const children = source.children

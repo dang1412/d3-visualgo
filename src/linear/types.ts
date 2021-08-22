@@ -1,9 +1,10 @@
-import { VisualOptions } from '../common'
+// import { VisualOptions } from '../common'
 
-export interface LinearVisualOptions<T extends LinearItem> extends VisualOptions<T> {
-  spacing?: number
-}
+// export interface LinearVisualOptions<T> extends VisualOptions<T> {
+//   spacing?: number
+// }
 
-export interface LinearItem {
+export interface LinearItem<T = any> {
   value: string
+  attrs?: T
 }

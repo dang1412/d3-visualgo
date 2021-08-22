@@ -1,14 +1,16 @@
 import { select } from 'd3-selection'
 import 'd3-transition'
 
-import { drawItems, getContainer, ItemPosition } from '../common'
-import { LinearVisualOptions, LinearItem } from './types'
+import { drawItems, getLayer, ItemPosition, VisualOptions } from '../common'
+import { LinearItem } from './types'
 
-export function drawLinear<T extends LinearItem>(wrapper: SVGElement | SVGGElement, items: T[], options: LinearVisualOptions<T>) {
-  const wrapperSelect = select(wrapper)
+export function drawLinear<T = any>(wrapper: SVGElement | SVGGElement, items: LinearItem<T>[], options: VisualOptions<T>) {
+  // const wrapperSelect = select(wrapper)
+  const { id = 1, offsetX = 0, offsetY = 0 } = options
 
   // get g container
-  const container = getContainer(wrapperSelect, options)
+  const container = getLayer(wrapper, id)
+  select(container).attr('transform', `translate(${offsetX}, ${offsetY})`)
 
   // calculate positions
   const itemsPos = getItemsPosition(items, options)
@@ -16,12 +18,12 @@ export function drawLinear<T extends LinearItem>(wrapper: SVGElement | SVGGEleme
   drawItems(container, itemsPos, options)
 }
 
-function getItemsPosition<T extends LinearItem>(items: T[], options: LinearVisualOptions<T>): ItemPosition<T>[] {
+function getItemsPosition<T>(items: LinearItem<T>[], options: VisualOptions<T>): ItemPosition<T>[] {
   const { spacing = 5, size = 25 } = options
 
   return items.map((item, i) => ({
     value: item.value,
     pos: { x: i * (size + spacing), y: 0 },
-    attrs: item // used for custom draw
+    attrs: item.attrs // used for custom draw
   })).filter(item => item.value)
 }

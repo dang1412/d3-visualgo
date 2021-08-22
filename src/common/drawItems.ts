@@ -1,12 +1,19 @@
-import { VisualOptions, ItemPosition, Container } from './types'
+import { select } from 'd3-selection'
 
-export function drawItems<T>(
-  container: Container,
+import { DrawItemOptions, ItemPosition  } from './types'
+
+export function drawItems<T = any>(
+  container: SVGGElement,
   items: ItemPosition<T>[],
-  opts: VisualOptions<any>
+  opts: DrawItemOptions<T>
 ): void {
-  const { size = 25, shape = 'circle', transitDuration = 1000, onTransitionEnd = () => {}, customizeDrawItems, itemId, offsetX = 0, offsetY = 0 } = opts
-  const itemsSelect = container.selectAll<SVGGElement, ItemPosition<T>>('g.item-container')
+  const { size = 25, shape = 'circle', transitDuration = 1000, onTransitionEnd = () => {}, customizeDrawItems, customizeItems, itemId } = opts
+  // customize items
+  if (typeof customizeItems === 'function') {
+    items = customizeItems(items)
+  }
+  // bind data
+  const itemsSelect = select(container).selectAll<SVGGElement, ItemPosition<T>>('g.itemWrap')
     .data(items, (d) => itemId ? itemId(d) : d.value)
 
   // remove on exit
@@ -18,9 +25,9 @@ export function drawItems<T>(
     .remove()
 
   const itemsEnter = itemsSelect.enter()
-    .insert('g')
-    .attr('class', 'item-container transit')
-    .attr('transform', (d) => `translate(${d.pos.x + offsetX}, ${d.pos.y - size / 2 + offsetY})`)
+    .append('g')
+    .attr('class', 'itemWrap')
+    .attr('transform', (d) => `translate(${d.pos.x}, ${d.pos.y - size / 2})`)
 
   // add circle or rect
   const itemsElem = itemsEnter.append(shape).attr('fill', 'white')
@@ -56,7 +63,7 @@ export function drawItems<T>(
     .transition()
     .duration(transitDuration)
     .attr('transform', (d) => {
-      return `translate(${d.pos.x + offsetX}, ${d.pos.y + offsetY})`
+      return `translate(${d.pos.x}, ${d.pos.y})`
     })
     .on('end', () => {
       count--
