@@ -24,8 +24,8 @@ export interface DrawItemOptions<T = any> {
   size?: number
   shape?: 'circle' | 'rect'
   transitDuration?: number
-  customizeItems?: (items: ItemPosition<T>[]) => ItemPosition<T>[]
-  customizeDrawItems?: (itemsAll: ItemsSelection<T>, itemsEnter: ItemsSelection<T>) => void
+  customizeItems?: (items: ItemPosition<T>[], options?: DrawItemOptions<T>) => ItemPosition<T>[]
+  customizeDrawItems?: (itemsAll: ItemsSelection<T>, itemsEnter: ItemsSelection<T>, options?: DrawItemOptions<T>) => void
   itemId?: (item: ItemPosition<T>) => string
   onTransitionEnd?: () => void
 }

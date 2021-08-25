@@ -8,7 +8,7 @@ import { calculateTree } from './internal'
 export const drawTree = <T = any>(wrapper: SVGElement | SVGGElement, data: TreeData<T>, options: VisualOptions<T>) => {
   // const wrapperSelect = select(wrapper)
 
-  const { width, height, id = 1, offsetX = 0, offsetY = 0 } = options
+  const { width, height, id = 1, offsetX = 0, offsetY = 20 } = options
 
   const container = getLayer(wrapper, id)
   select(container).attr('transform', `translate(${offsetX}, ${offsetY})`)

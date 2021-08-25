@@ -10,7 +10,7 @@ export function drawItems<T = any>(
   const { size = 25, shape = 'circle', transitDuration = 1000, onTransitionEnd = () => {}, customizeDrawItems, customizeItems, itemId } = opts
   // customize items
   if (typeof customizeItems === 'function') {
-    items = customizeItems(items)
+    items = customizeItems(items, opts)
   }
   // bind data
   const itemsSelect = select(container).selectAll<SVGGElement, ItemPosition<T>>('g.itemWrap')
@@ -77,6 +77,6 @@ export function drawItems<T = any>(
     .attr('stroke', '#ccc')
 
   if (typeof customizeDrawItems === 'function') {
-    customizeDrawItems(itemsAll, itemsEnter)
+    customizeDrawItems(itemsAll, itemsEnter, opts)
   }
 }

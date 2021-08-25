@@ -33,8 +33,10 @@ function getLinkPosition<T>(l: HierarchyPointLink<TreeData<T>>, size: number): L
   const childrenLength = l.source.data.children.length
   const childIndex = findTargetIndex(l.source, l.target)
 
+  const x = childrenLength > 1 ? l.source.x - itemsLength / 2 * size + itemsLength * size * childIndex / (childrenLength - 1) : l.source.x
+
   const start: Point = {
-    x: l.source.x - itemsLength / 2 * size + itemsLength * size * childIndex / (childrenLength - 1),
+    x,
     y: l.source.y + size / 2,
   }
 
@@ -50,7 +52,7 @@ function getLinkPosition<T>(l: HierarchyPointLink<TreeData<T>>, size: number): L
     // attrs: l.target.data.attrs
   }
 
-  return { start, end }
+  return { start, end, attrs: l.target.data.attrs ? l.target.data.attrs[0] : undefined }
 }
 
 function getNodeItemsPosition<T>(node: HierarchyPointNode<TreeData<T>>, size: number): ItemPosition<T>[] {

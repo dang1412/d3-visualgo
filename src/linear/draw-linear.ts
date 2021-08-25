@@ -6,7 +6,7 @@ import { LinearItem } from './types'
 
 export function drawLinear<T = any>(wrapper: SVGElement | SVGGElement, items: LinearItem<T>[], options: VisualOptions<T>) {
   // const wrapperSelect = select(wrapper)
-  const { id = 1, offsetX = 0, offsetY = 0 } = options
+  const { id = 1, offsetX = 0, offsetY = 5 } = options
 
   // get g container
   const container = getLayer(wrapper, id)
