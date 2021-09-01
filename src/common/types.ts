@@ -20,6 +20,8 @@ export interface LinkPosition<T = any> {
 
 export type ItemsSelection<T = any> = Selection<SVGGElement, ItemPosition<T>, SVGGElement, unknown>
 
+export type LinksSelection<T = any> = Selection<SVGGElement, LinkPosition<T>, SVGGElement, unknown>
+
 export interface DrawItemOptions<T = any> {
   size?: number
   shape?: 'circle' | 'rect'
@@ -33,6 +35,7 @@ export interface DrawItemOptions<T = any> {
 export interface DrawLinkOptions<T = any> {
   transitDuration?: number
   linkId?: (link: LinkPosition<T>) => string
+  customizeDrawLinks?: (linksAll: LinksSelection<T>, linksEnter: LinksSelection<T>, options?: DrawLinkOptions<T>) => void
 }
 
 export type VisualOptions<T = any> = DrawItemOptions<T> & DrawLinkOptions<T> & {

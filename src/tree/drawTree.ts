@@ -1,13 +1,10 @@
 import { select } from 'd3-selection'
-import 'd3-transition'
 
 import { drawItems, drawLinks, getLayer, VisualOptions } from '../common'
 import { TreeData } from './types'
 import { calculateTree } from './internal'
 
 export const drawTree = <T = any>(wrapper: SVGElement | SVGGElement, data: TreeData<T>, options: VisualOptions<T>) => {
-  // const wrapperSelect = select(wrapper)
-
   const { width, height, id = 1, offsetX = 0, offsetY = 20 } = options
 
   const container = getLayer(wrapper, id)

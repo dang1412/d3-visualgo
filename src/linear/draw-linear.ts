@@ -1,5 +1,4 @@
 import { select } from 'd3-selection'
-import 'd3-transition'
 
 import { drawItems, getLayer, ItemPosition, VisualOptions } from '../common'
 import { LinearItem } from './types'

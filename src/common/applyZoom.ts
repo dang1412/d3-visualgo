@@ -11,7 +11,7 @@ export function applyZoom(receiver: SVGElement, target: SVGElement) {
     })
     .extent([[0, 0], [width, height]])
     .scaleExtent([1, 1])
-    .translateExtent([[0, 0], [Infinity, height]])
+    .translateExtent([[-Infinity, 0], [Infinity, height]])
 
   select(receiver).call(zoomObj)
 }
