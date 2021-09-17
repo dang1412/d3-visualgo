@@ -34,6 +34,7 @@ export interface DrawItemOptions<T = any> {
 
 export interface DrawLinkOptions<T = any> {
   transitDuration?: number
+  straightLine?: boolean
   linkId?: (link: LinkPosition<T>) => string
   customizeDrawLinks?: (linksAll: LinksSelection<T>, linksEnter: LinksSelection<T>, options?: DrawLinkOptions<T>) => void
 }
@@ -45,6 +46,8 @@ export type VisualOptions<T = any> = DrawItemOptions<T> & DrawLinkOptions<T> & {
   spacing?: number  // for linear draw
   offsetX?: number
   offsetY?: number
+  reverseXY?: boolean
+  splitLink?: boolean
 }
 
 // export interface VisualOptions<T> {

@@ -7,8 +7,10 @@ import { calculateTree } from './internal'
 export const drawTree = <T = any>(wrapper: SVGElement | SVGGElement, data: TreeData<T>, options: VisualOptions<T>) => {
   const { width, height, id = 1, offsetX = 0, offsetY = 20 } = options
 
-  const container = getLayer(wrapper, id)
-  select(container).attr('transform', `translate(${offsetX}, ${offsetY})`)
+  const container1 = getLayer(wrapper, id)
+  const container2 = getLayer(wrapper, id + 1)
+  select(container1).attr('transform', `translate(${offsetX}, ${offsetY})`)
+  select(container2).attr('transform', `translate(${offsetX}, ${offsetY})`)
 
   // const [width, height] = calculateWidthHeight(options)
 
@@ -16,8 +18,8 @@ export const drawTree = <T = any>(wrapper: SVGElement | SVGGElement, data: TreeD
   const treePosition = calculateTree(width - offsetX, height - offsetY, data, options)
 
   // Draw links
-  drawLinks(container, treePosition.links, options)
+  drawLinks(container1, treePosition.links, options)
 
   // Draw items
-  drawItems(container, treePosition.items, options)
+  drawItems(container2, treePosition.items, options)
 }
